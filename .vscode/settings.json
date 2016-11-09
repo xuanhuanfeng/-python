@@ -7,4 +7,6 @@
     // 控制在多少个字符后编辑器会自动换到下一行。将其设置为 0 则将打开视区宽度换行(自动换行)。将其设置为 -1 则将强制编辑器始终不换行。
     "editor.wrappingColumn": 80,
     "markdown.styles": ["file:///Users/peng/Documents/markdown.css"]
+,
+"python.linting.pylintEnabled": false
 }

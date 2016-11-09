@@ -152,7 +152,29 @@ def handle_data(context, data):
     else:
         g.balanceDayNum -= 1
         
+'''
+工具类，主要用来提供一些辅助功能
+'''
+class fun_tool():
+    #初始函数
+    def __init__(self,context,stocklist):
+        self.context = context
+        pass;
 
+    # 剔除上市时间较短的产品
+    def fun_delNewShare(self, equity, deltaday):
+        deltaDate = self.context.current_dt.date() - dt.timedelta(deltaday)
+    
+        tmpList = []
+        for stock in equity:
+            tmpdate = get_security_info(stock).start_date
+            if get_security_info(stock).start_date < deltaDate:
+                tmpList.append(stock)
+            else:
+                log.info("%s start date is %t,is not exit now",stock,tmpdate)
+    
+        return tmpList  
+          
 '''
 交易类，主要产生买入，卖出信号，以及仓位控制
 '''
