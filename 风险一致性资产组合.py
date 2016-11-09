@@ -74,14 +74,14 @@ def fun_initialize(context):
     #设置卖出的网格
     g.sellGird = {0.4:0,0.1:0,0:0}
     #设置处理的股票池
-    g.stockList = ['510300.XSHG','510500.XSHG','159915.XSHE','510050.XSHG',
-                    '518880.XSHG','162411.XSHE',
+    g.stockList = ['510300.XSHG',
+                    '518880.XSHG',
                     '511010.XSHG',
                     '513100.XSHG']
     #设置调仓的周期
     g.circleDay = 20
     #设置调仓的价格变化的阀值
-    g.priceChangePercent = 0.10
+    g.priceChangePercent = 0.15
     #设置调仓的权重变化的阀值
     g.ratioChangePercent = 0.25
 
@@ -124,7 +124,8 @@ def handle_data(context, data):
     if needbalance(h,context):
         #调仓
         g.balanceDayNum = g.circleDay
-        trade_ratio = stockPosition(0.03,0.05,g.stockList,120,0.95).trade_ratio
+        trade_ratio = stockPosition(0.01,0.017,g.stockList,120,0.95).trade_ratio
+        print trade_ratio
         #计算和上次仓位占比的差值，按从小到大排序，优先卖出
         diff_ratio = {}
         for stock in g.stockList:
@@ -537,9 +538,8 @@ class stockPosition():
             tau = 1
 
         for stock in stocklist:
-            trade_ratio[stock] = trade_position[stock] * tau  / sum_position
-        
-        total_ratio = sum(trade_ratio.values())
+            trade_ratio[stock] = round(trade_position[stock] * tau  / sum_position,3)
+
        
         return trade_ratio
 
